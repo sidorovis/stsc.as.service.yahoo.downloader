@@ -4,7 +4,7 @@
 
 	<groupId>stsc</groupId>
 	<artifactId>stsc.as.service.yahoo.downloader</artifactId>
-	<version>0.0.17-PROSEP</version>
+	<version>0.0.18-WEBINTERFACE</version>
 	<packaging>jar</packaging>
 
 	<name>stsc.as.service.yahoo.downloader</name>
@@ -99,12 +99,12 @@
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.database.storage</artifactId>
-			<version>${project.version}</version>
+			<version>0.0.17-PROSEP</version>
 		</dependency>
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.stocks.yahoo.downloader</artifactId>
-			<version>${project.version}</version>
+			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
