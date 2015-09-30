@@ -22,7 +22,7 @@ import stsc.common.service.statistics.StatisticType;
 import stsc.database.migrations.YahooDownloaderDatabaseSettings;
 import stsc.database.service.schemas.OrmliteYahooDownloaderLogger;
 import stsc.database.service.storages.YahooDownloaderDatabaseStorage;
-import stsc.yahoo.YahooSettings;
+import stsc.yahoo.YahooDatafeedSettings;
 import stsc.yahoo.YahooUtils;
 import stsc.yahoo.downloader.YahooDownloadCourutine;
 
@@ -69,8 +69,8 @@ final class YahooDownloadService implements StopableApp {
 				synchronized (lock) {
 					final long secondsSleepInterval = (intervalBetweenExecutionsSeconds - timeDiff);
 					final double minutesSleepInterval = (double) secondsSleepInterval / 3600;
-					downloaderLogger.log(StatisticType.TRACE, "Sleep until next cycle: " + (intervalBetweenExecutionsSeconds - timeDiff)
-							+ " seconds (" + minutesSleepInterval + " hours)");
+					downloaderLogger.log(StatisticType.TRACE,
+							"Sleep until next cycle: " + (intervalBetweenExecutionsSeconds - timeDiff) + " seconds (" + minutesSleepInterval + " hours)");
 					lock.wait(1000 * (intervalBetweenExecutionsSeconds - timeDiff));
 				}
 			}
@@ -82,15 +82,15 @@ final class YahooDownloadService implements StopableApp {
 		try {
 			final YahooDownloaderSettings s = settings;
 			final boolean downloadExisted = s.downloadOnlyExisted();
-			final YahooSettings settings = YahooUtils.createSettings();
+			final YahooDatafeedSettings settings = YahooUtils.createSettings();
 			final boolean downloadByPattern = s.downloadByPattern();
 			final String startPattern = s.patternNameFrom();
 			final String endPattern = s.patternNameTo();
 			final int stockNameMinLength = s.stockNameFrom();
 			final int stockNameMaxLength = s.stockNameTo();
 			final int downloadThreadSize = s.threadAmount();
-			final YahooDownloadCourutine courutine = new YahooDownloadCourutine(downloaderLogger, downloadExisted, settings,
-					downloadByPattern, startPattern, endPattern, stockNameMinLength, stockNameMaxLength, downloadThreadSize);
+			final YahooDownloadCourutine courutine = new YahooDownloadCourutine(downloaderLogger, downloadExisted, settings, downloadByPattern, startPattern, endPattern,
+					stockNameMinLength, stockNameMaxLength, downloadThreadSize);
 			synchronized (this) {
 				this.courutine = Optional.of(courutine);
 			}
