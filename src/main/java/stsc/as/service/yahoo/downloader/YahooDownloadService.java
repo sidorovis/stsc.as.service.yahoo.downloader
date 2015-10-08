@@ -23,7 +23,6 @@ import stsc.database.migrations.YahooDownloaderDatabaseSettings;
 import stsc.database.service.schemas.OrmliteYahooDownloaderLogger;
 import stsc.database.service.storages.YahooDownloaderDatabaseStorage;
 import stsc.yahoo.YahooDatafeedSettings;
-import stsc.yahoo.YahooUtils;
 import stsc.yahoo.downloader.YahooDownloadCourutine;
 
 final class YahooDownloadService implements StopableApp {
@@ -82,7 +81,7 @@ final class YahooDownloadService implements StopableApp {
 		try {
 			final YahooDownloaderSettings s = settings;
 			final boolean downloadExisted = s.downloadOnlyExisted();
-			final YahooDatafeedSettings settings = YahooUtils.createSettings();
+			final YahooDatafeedSettings settings = new YahooDatafeedSettings();
 			final boolean downloadByPattern = s.downloadByPattern();
 			final String startPattern = s.patternNameFrom();
 			final String endPattern = s.patternNameTo();
