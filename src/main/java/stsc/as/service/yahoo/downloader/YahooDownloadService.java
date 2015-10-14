@@ -23,7 +23,7 @@ import stsc.database.migrations.YahooDownloaderDatabaseSettings;
 import stsc.database.service.schemas.OrmliteYahooDownloaderLogger;
 import stsc.database.service.storages.YahooDownloaderDatabaseStorage;
 import stsc.yahoo.YahooDatafeedSettings;
-import stsc.yahoo.downloader.YahooDownloadCourutine;
+import stsc.yahoo.downloader.YahooDownloadCoroutine;
 
 final class YahooDownloadService implements StopableApp {
 
@@ -41,7 +41,7 @@ final class YahooDownloadService implements StopableApp {
 	private final YahooDownloaderDatabaseStorage settingsStorage;
 	private final OrmliteYahooDownloaderLogger downloaderLogger;
 
-	private Optional<YahooDownloadCourutine> courutine = Optional.empty();
+	private Optional<YahooDownloadCoroutine> courutine = Optional.empty();
 	private Object lock = new Object();
 
 	private YahooDownloadService() throws FileNotFoundException, IOException, SQLException {
@@ -88,7 +88,7 @@ final class YahooDownloadService implements StopableApp {
 			final int stockNameMinLength = s.stockNameFrom();
 			final int stockNameMaxLength = s.stockNameTo();
 			final int downloadThreadSize = s.threadAmount();
-			final YahooDownloadCourutine courutine = new YahooDownloadCourutine(downloaderLogger, downloadExisted, settings, downloadByPattern, startPattern, endPattern,
+			final YahooDownloadCoroutine courutine = new YahooDownloadCoroutine(downloaderLogger, downloadExisted, settings, downloadByPattern, startPattern, endPattern,
 					stockNameMinLength, stockNameMaxLength, downloadThreadSize);
 			synchronized (this) {
 				this.courutine = Optional.of(courutine);
