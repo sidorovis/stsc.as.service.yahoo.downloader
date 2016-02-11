@@ -88,8 +88,8 @@ final class YahooDownloadService implements StopableApp {
 			final int stockNameMinLength = s.stockNameFrom();
 			final int stockNameMaxLength = s.stockNameTo();
 			final int downloadThreadSize = s.threadAmount();
-			final YahooDownloadCoroutine courutine = new YahooDownloadCoroutine(downloaderLogger, downloadExisted, settings, downloadByPattern, startPattern, endPattern,
-					stockNameMinLength, stockNameMaxLength, downloadThreadSize);
+			final YahooDownloadCoroutine courutine = new YahooDownloadCoroutine(downloaderLogger, downloadExisted, settings, downloadByPattern, startPattern,
+					endPattern, stockNameMinLength, stockNameMaxLength, downloadThreadSize);
 			synchronized (this) {
 				this.courutine = Optional.of(courutine);
 			}
@@ -148,7 +148,10 @@ final class YahooDownloadService implements StopableApp {
 	public static void main(String[] args) {
 		try {
 			final StopableApp app = new YahooDownloadService();
-			ApplicationHelper.createHelper(app);
+			ApplicationHelper.createHelper(app, (e) -> {
+				e.printStackTrace();
+				return true;
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
